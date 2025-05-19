@@ -1,0 +1,22 @@
+﻿@model HankoSpa.Models.Servicio
+
+@{
+    ViewData["Title"] = "Detalle del Servicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 mb-3"> Detalle del Tratamiento</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Nombre del Servicio:</dt>
+            <dd class="col-sm-8">@Model.NombreServicio</dd>
+
+            <dt class="col-sm-4">Descripción:</dt>
+            <dd class="col-sm-8">@Model.DescripcionServicio</dd>
+        </dl>
+
+        <a asp-action="Index" class="btn btn-secondary mt-3">Volver</a>
+    </div>
+</div>

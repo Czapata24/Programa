@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HankoSpa</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HankoSpa.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <!-- Título HankoSpa -->
+                <a class="navbar-brand fs-3 fw-bold" asp-area="" asp-controller="Home" asp-action="Index">HankoSpa</a>
+
+                <!-- Menú dinámico -->
+                @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home")
+                {
+                    <!-- Menú vertical para la página Inicio -->
+                    <ul class="navbar-nav flex-column mt-4">
+                        <li class="nav-item mb-3">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <!-- Menú horizontal para las páginas Servicios y Citas -->
+                    <ul class="navbar-nav d-flex flex-row mt-4">
+                        <li class="nav-item me-3">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-4">
+        <div class="container">
+            &copy; 2025 - HankoSpa - <a asp-controller="Home" asp-action="Privacy">Política de privacidad</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

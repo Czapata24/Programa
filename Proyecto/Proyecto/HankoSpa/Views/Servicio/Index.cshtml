@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HankoSpa.DTOs.ServiceDTO>
+
+@{
+    ViewData["Title"] = "Servicios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var serviciosOrdenados = Model.OrderBy(s => s.NombreServicio).ToList();
+}
+
+<div class="mt-4">
+    <h2 class="text-primary">📋 Lista de Servicios</h2>
+    <hr />
+
+    @* Mensaje de éxito *@
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensajeExito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @* Mensaje de error *@
+    @if (TempData["MensajeError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["MensajeError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <p>
+        <a class="btn btn-success" asp-controller="Servicio" asp-action="Create">➕ Agregar nuevo servicio</a>
+    </p>
+
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="bg-white text-dark">
+            <tr>
+                <th>#</th>
+                <th>Nombre del Servicio</th>
+                <th>Descripción</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!serviciosOrdenados.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No hay servicios registrados.</td>
+                </tr>
+            }
+            else
+            {
+                var i = 1;
+                foreach (var item in serviciosOrdenados)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.NombreServicio</td>
+                        <td>@item.DescripcionServicio</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-warning btn-sm me-1" asp-controller="Servicio" asp-action="Edit"
+                                asp-route-id="@item.ServicioId">✏️ Editar</a>
+                            <a class="btn btn-outline-danger btn-sm" asp-controller="Servicio" asp-action="Delete"
+                                asp-route-id="@item.ServicioId">🗑️ Eliminar</a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

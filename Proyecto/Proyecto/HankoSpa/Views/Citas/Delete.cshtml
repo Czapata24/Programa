@@ -1,0 +1,35 @@
+﻿@model HankoSpa.DTOs.CitaDTO
+
+@{
+    ViewBag.Title = "Eliminar Cita";
+}
+
+<h2 class="mt-4 mb-3 text-danger">🗑️ Eliminar Cita</h2>
+
+<h5>¿Estás seguro de que deseas eliminar la siguiente cita?</h5>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Fecha de la Cita:</dt>
+            <dd class="col-sm-8">@Model.FechaCita.ToShortDateString()</dd>
+
+            <dt class="col-sm-4">Hora de la Cita:</dt>
+            <dd class="col-sm-8">@Model.HoraCita.ToString(@"hh\:mm")</dd>
+
+            <dt class="col-sm-4">Estado:</dt>
+            <dd class="col-sm-8">@Model.EstadoCita</dd>
+        </dl>
+    </div>
+</div>
+
+@using (Html.BeginForm("Delete", "Citas", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.CitaId)
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="@Url.Action("Index", "Citas")" class="btn btn-secondary ms-2">Cancelar</a>
+    </div>
+}

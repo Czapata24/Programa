@@ -1,0 +1,28 @@
+﻿@model HankoSpa.DTOs.CitaDTO
+
+@{
+    ViewData["Title"] = "Detalle de la Cita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 mb-3">📋 Detalle de la Cita</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Fecha de la Cita:</dt>
+            <dd class="col-sm-8">@Model.FechaCita.ToShortDateString()</dd>
+
+            <dt class="col-sm-4">Hora de la Cita:</dt>
+            <dd class="col-sm-8">@Model.HoraCita.ToString(@"hh\:mm")</dd>
+
+            <dt class="col-sm-4">Estado:</dt>
+            <dd class="col-sm-8">@Model.EstadoCita</dd>
+
+            <dt class="col-sm-4">Usuario ID:</dt>
+            <dd class="col-sm-8">@Model.UsuarioID</dd>
+        </dl>
+
+        <a asp-action="Index" class="btn btn-secondary mt-3">Volver</a>
+    </div>
+</div>

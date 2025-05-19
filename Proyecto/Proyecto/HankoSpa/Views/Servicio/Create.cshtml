@@ -1,0 +1,29 @@
+﻿@model HankoSpa.DTOs.ServiceDTO
+
+@{
+    ViewBag.Title = "Crear Servicio";
+}
+
+<h2>✍️ Crear Servicio</h2>
+
+@using (Html.BeginForm("Create", "Servicio", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.NombreServicio)
+            @Html.TextBoxFor(model => model.NombreServicio, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NombreServicio)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DescripcionServicio)
+            @Html.TextAreaFor(model => model.DescripcionServicio, new { @class = "form-control", rows = 4 })
+            @Html.ValidationMessageFor(model => model.DescripcionServicio)
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a href="@Url.Action("Index", "Servicio")" class="btn btn-secondary">Cancelar</a>
+    </div>
+}

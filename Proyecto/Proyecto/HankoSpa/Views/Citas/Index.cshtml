@@ -1,0 +1,73 @@
+﻿@model IEnumerable<HankoSpa.Models.Cita>
+
+@{
+    ViewData["Title"] = "Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var citasOrdenadas = Model.OrderBy(c => c.FechaCita).ThenBy(c => c.HoraCita).ToList();
+}
+
+<div class="mt-4">
+    <h2 class="text-primary">📅 Citas Agendadas</h2>
+    <hr />
+
+    @* Mensaje de éxito *@
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensajeExito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @* Mensaje de error opcional *@
+    @if (TempData["MensajeError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["MensajeError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <p>
+        <a class="btn btn-success" asp-action="Create">➕ Agendar nueva cita</a>
+    </p>
+
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="bg-white text-dark">
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!citasOrdenadas.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No hay citas registradas.</td>
+                </tr>
+            }
+            else
+            {
+                var i = 1;
+                foreach (var item in citasOrdenadas)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.FechaCita.ToShortDateString()</td>
+                        <td>@item.HoraCita.ToString(@"hh\:mm")</td>
+                        <td>@item.EstadoCita</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-info btn-sm me-1" asp-action="Details" asp-route-id="@item.CitaId">👁️ Ver</a>
+                            <a class="btn btn-outline-warning btn-sm me-1" asp-action="Edit" asp-route-id="@item.CitaId">✏️ Editar</a>
+                            <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.CitaId">🗑️ Eliminar</a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

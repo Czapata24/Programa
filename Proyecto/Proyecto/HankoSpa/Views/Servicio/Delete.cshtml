@@ -1,0 +1,33 @@
+﻿@model HankoSpa.DTOs.ServiceDTO
+
+@{
+    ViewBag.Title = "Eliminar Servicio";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 mb-3 text-danger">🗑️ Eliminar Tratamiento</h2>
+
+<h5>¿Estás seguro de que deseas eliminar el siguiente servicio?</h5>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Nombre del Servicio:</dt>
+            <dd class="col-sm-8">@Model.NombreServicio</dd>
+
+            <dt class="col-sm-4">Descripción:</dt>
+            <dd class="col-sm-8">@Model.DescripcionServicio</dd>
+        </dl>
+    </div>
+</div>
+
+@using (Html.BeginForm("Delete", "Servicio", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ServicioId)
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="@Url.Action("Index", "Servicio")" class="btn btn-secondary ms-2">Cancelar</a>
+    </div>
+}

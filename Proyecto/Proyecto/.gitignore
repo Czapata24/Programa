@@ -1,0 +1,28 @@
+# Archivos de configuración local (no compartir en equipo)
+HankoSpa/appsettings.Development.json
+HankoSpa/appsettings.Local.json
+
+# Carpetas generadas por compilación
+HankoSpa/bin/
+HankoSpa/obj/
+
+# Archivos de usuario de Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Configuración de VS Code (opcional)
+.vscode/
+
+# Archivos de entorno de Git
+.env
+
+# Otros
+.vs/
+
+.fake

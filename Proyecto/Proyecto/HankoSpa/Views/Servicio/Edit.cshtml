@@ -1,0 +1,35 @@
+﻿@model HankoSpa.DTOs.ServiceDTO
+
+@{
+    ViewBag.Title = "Editar Servicio";
+}
+
+<h2>✏️ Editar Tratamiento</h2>
+
+@using (Html.BeginForm("Edit", "Servicio", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ServicioId)
+
+    <div class="form-horizontal">
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.NombreServicio, htmlAttributes: new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.NombreServicio, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NombreServicio, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.DescripcionServicio, htmlAttributes: new { @class = "form-label" })
+            @Html.TextAreaFor(model => model.DescripcionServicio, new { @class = "form-control", rows = 4 })
+            @Html.ValidationMessageFor(model => model.DescripcionServicio, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-warning">Guardar cambios</button>
+        <a href="@Url.Action("Index", "Servicio")" class="btn btn-secondary ms-2">Cancelar</a>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
