@@ -1,4 +1,5 @@
 ﻿using HankoSpa.Data;
+using HankoSpa.Data.Seeder;
 using HankoSpa.Services.Interfaces;
 
 namespace HankoSpa.Models
@@ -8,6 +9,7 @@ namespace HankoSpa.Models
         private readonly AppDbContext _context;
         private readonly IUsersService _userServices;
 
+
         public SeedDb (AppDbContext context, IUsersService usersService)
         {
             _context = context;
@@ -16,7 +18,8 @@ namespace HankoSpa.Models
 
         public async Task SeedAsync()
         {
-            await new SeedDb(_context, _userServices).SeedAsync();
+            await new PermissionsSeeder(_context).SeedAsync();
+            await new UserRolesSeeder(_context, _userServices).SeedAsync();
 
         }
 

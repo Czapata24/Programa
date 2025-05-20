@@ -14,9 +14,9 @@ namespace HankoSpa.Data.Seeder
         }
         public async Task SeedAsync()
         {
-            List<Permission> permissions = [Section()];
+            List<Permission> permissions = Section();
 
-            foreach (PermissionsSeeder permission in permissions)
+            foreach (Permission permission in permissions)
             {
                 bool exists = await _context.Permissions.AnyAsync(p => p.NombrePermiso == permission.NombrePermiso && p.Module == permission.Module);
 

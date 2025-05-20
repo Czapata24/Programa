@@ -54,29 +54,29 @@ namespace HankoSpa.Data.Seeder
         private async Task CheckRoles()
         {
             await AdminRoleAsync();
-            await ContentManagerRoleAsync();
+            //await ContentManagerRoleAsync();
         }
 
-        private async Task ContentManagerRoleAsync()
-        {
-            bool exists = await _context.Servicios.AnyAsync(c => c.NombreServicio == "gestor");
+        //private async Task ContentManagerRoleAsync()
+        //{
+        //    bool exists = await _context.Servicios.AnyAsync(c => c.NombreServicio == "gestor");
 
-            if (!exists)
-            {
-                Servicio role = new Servicio { NombreServicio = "Gestor" };
-                await _context.Servicios.AddAsync(role);
+        //    if (!exists)
+        //    {
+        //        Servicio role = new Servicio { NombreServicio = "Gestor" };
+        //        await _context.Servicios.AddAsync(role);
 
-                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
+        //        List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
 
-                foreach (Permission permission in permissions)
-                {
-                    await _context.RolPermissions.AddAsync(new RolPermission { Permission = permission, Role = role });
-                }
+        //        foreach (Permission permission in permissions)
+        //        {
+        //            await _context.RolPermissions.AddAsync(new RolPermission { Permission = permission, Role = role });
+        //        }
 
-                await _context.SaveChangesAsync();
-            }
+        //        await _context.SaveChangesAsync();
+        //    }
 
-        }
+        //}
 
         private async Task AdminRoleAsync()
         {
@@ -84,7 +84,7 @@ namespace HankoSpa.Data.Seeder
 
             if (!exists)
             {
-                Servicio role = new Servicio { NombreServicio = Env.SUPERADMINROLENAME };
+                Servicio role = new Servicio { NombreServicio = Env.SUPERADMINROLENAME, DescripcionServicio = "Rojo" };
                 await _context.Servicios.AddAsync(role);
                 await _context.SaveChangesAsync();
             }

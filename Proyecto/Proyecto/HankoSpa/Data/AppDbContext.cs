@@ -47,7 +47,7 @@ namespace HankoSpa.Data
 
             // Relacion entre RolPermission y Rol
             modelBuilder.Entity<RolPermission>()
-                .HasOne(rp => rp.CustomRol) // RolPermission tiene un Rol
+                .HasOne(rp => rp.Name) // RolPermission tiene un Rol
                 .WithMany(r => r.RolPermissions) // Rol tiene muchas RolPermissions
                 .HasForeignKey(rp => rp.CustomRolId); // Clave foránea
 

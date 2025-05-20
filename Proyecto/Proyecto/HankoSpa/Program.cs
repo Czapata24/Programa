@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<SeedDb>();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICitaRepository, CitaRepository>();
@@ -45,6 +47,15 @@ builder.Services.AddIdentity<User, IdentityRole>(x =>
 
 
 var app = builder.Build();
+SeedData(app);
+
+void SeedData(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using var scope = scopedFactory!.CreateScope();
+    var service = scope.ServiceProvider.GetService<SeedDb>();
+    service!.SeedAsync().Wait();
+}
 
 using (var scope = app.Services.CreateScope())
 {
