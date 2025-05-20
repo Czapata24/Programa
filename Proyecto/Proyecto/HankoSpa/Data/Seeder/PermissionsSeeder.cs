@@ -14,7 +14,7 @@ namespace HankoSpa.Data.Seeder
         }
         public async Task SeedAsync()
         {
-            List<Permission> permissions = Section();
+            List<Permission> permissions = [.. Section()];
 
             foreach (Permission permission in permissions)
             {

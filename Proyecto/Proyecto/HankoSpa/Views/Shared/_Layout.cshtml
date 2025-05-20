@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using HankoSpa.Models
+@inject HankoSpa.Services.Interfaces.IUsersService _usersService
+
+@{
+    User? user;
+    try
+    {
+        user = await _usersService.GetUserAsync(User.Identity.Name);
+    }
+    catch (Exception)
+    {
+        user = null;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -15,40 +30,48 @@
                 <!-- Título HankoSpa -->
                 <a class="navbar-brand fs-3 fw-bold" asp-area="" asp-controller="Home" asp-action="Index">HankoSpa</a>
 
-                <!-- Menú dinámico -->
-                @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home")
-                {
-                    <!-- Menú vertical para la página Inicio -->
-                    <ul class="navbar-nav flex-column mt-4">
-                        <li class="nav-item mb-3">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item mb-3">
-                            <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
-                        </li>
-                        <li class="nav-item mb-3">
-                            <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
-                        </li>
-                        <li class="nav-item mb-3">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                    </ul>
+                @if (user is not null)
+                { 
+                    <!-- Menú dinámico -->
+                    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home")
+                    {
+                        <!-- Menú vertical para la página Inicio -->
+                        <ul class="navbar-nav flex-column mt-4">
+                            
+                            <li class="nav-item mb-3">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <!-- Menú horizontal para las páginas Servicios y Citas -->
+                        <ul class="navbar-nav d-flex flex-row mt-4">
+                            <li class="nav-item me-3">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
+                            </li>
+                        </ul>
+                    }
+                }else{
+                        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
                 }
-                else
-                {
-                    <!-- Menú horizontal para las páginas Servicios y Citas -->
-                    <ul class="navbar-nav d-flex flex-row mt-4">
-                        <li class="nav-item me-3">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link text-dark" asp-controller="Servicio" asp-action="Index">Servicios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Citas" asp-action="Index">Citas</a>
-                        </li>
-                    </ul>
-                }
+
+                
             </div>
         </nav>
     </header>

@@ -26,9 +26,7 @@ namespace HankoSpa.Models
 
         public int CustomRolId { get; set; }
 
-        public virtual CustomRol? CustomRol { get; set; }
-
-        
+        public virtual CustomRol? CustomRol { get; set; }        
 
     }
 }

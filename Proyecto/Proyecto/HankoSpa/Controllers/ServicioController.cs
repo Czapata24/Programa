@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using HankoSpa.Services.Interfaces;
 using HankoSpa.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using HankoSpa.Controllers.Attributes;
 
 namespace HankoSpa.Controllers
 {
@@ -15,6 +17,7 @@ namespace HankoSpa.Controllers
         }
 
         // GET: Servicio
+        [CustomAuthorize(permission: "showSection", module: "Secciones")]
         public async Task<IActionResult> Index()
         {
             var response = await _servicioService.GetAllAsync();

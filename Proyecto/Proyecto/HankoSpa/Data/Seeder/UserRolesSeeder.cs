@@ -2,6 +2,7 @@
 using HankoSpa.Models;
 using HankoSpa.Services;
 using HankoSpa.Services.Interfaces;
+using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
@@ -27,25 +28,26 @@ namespace HankoSpa.Data.Seeder
         private async Task CheckUsers()
         {
             //Admin
-            User? user = await _userServices.GetUserAsync("Cristian@gmail.com");
+            User? user = await _userServices.GetUserAsync("cristian@gmail.com");
 
             if (user is null)
             {
                CustomRol customRol = await _context.CustomRoles.FirstOrDefaultAsync(c => c.NombreRol == Env.SUPERADMINROLENAME);
-
+                
                 user = new User
                 {
-                    Email = "Cristian@gmail.com",
+                    Email = "cristian@gmail.com",
                     FirstName = "Cristian",
                     LastName = "Zapata",
                     PhoneNumber = "3012025",
-                    UserName = "Cristian@gmail.com",
+                    UserName = "cristian@gmail.com",
                     Document = "12121",
-                    CustomRol = customRol
-
+                    Name = "Daniel",
+                    CustomRol = customRol,
+                    Citas = null
                 };
-                 await _userServices.AddUserAsync(user, "1234");
-
+                 var re = await _userServices.AddUserAsync(user, "123456");
+                
                 string token = await _userServices.GenerateEmailConfirmationTokenAsync(user);
                 await _userServices.ConfirmEmailAsync(user, token);
             }
@@ -54,38 +56,38 @@ namespace HankoSpa.Data.Seeder
         private async Task CheckRoles()
         {
             await AdminRoleAsync();
-            //await ContentManagerRoleAsync();
+            await ContentManagerRoleAsync();
         }
 
-        //private async Task ContentManagerRoleAsync()
-        //{
-        //    bool exists = await _context.Servicios.AnyAsync(c => c.NombreServicio == "gestor");
-
-        //    if (!exists)
-        //    {
-        //        Servicio role = new Servicio { NombreServicio = "Gestor" };
-        //        await _context.Servicios.AddAsync(role);
-
-        //        List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
-
-        //        foreach (Permission permission in permissions)
-        //        {
-        //            await _context.RolPermissions.AddAsync(new RolPermission { Permission = permission, Role = role });
-        //        }
-
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //}
-
-        private async Task AdminRoleAsync()
+        private async Task ContentManagerRoleAsync()
         {
-            bool exists = await _context.Servicios.AnyAsync(c => c.NombreServicio == Env.SUPERADMINROLENAME);
+            bool exists = await _context.CustomRoles.AnyAsync(c => c.NombreRol == "gestor");
 
             if (!exists)
             {
-                Servicio role = new Servicio { NombreServicio = Env.SUPERADMINROLENAME, DescripcionServicio = "Rojo" };
-                await _context.Servicios.AddAsync(role);
+                CustomRol role = new CustomRol { NombreRol = "Gestor" };
+                await _context.CustomRoles.AddAsync(role);
+
+                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
+
+                foreach (Permission permission in permissions)
+                {
+                    await _context.RolPermissions.AddAsync(new RolPermission { Permission = permission, Name = role, Role="UX/UI" });
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+        }
+
+        private async Task AdminRoleAsync()
+        {
+            bool exists = await _context.CustomRoles.AnyAsync(c => c.NombreRol == Env.SUPERADMINROLENAME);
+
+            if (!exists)
+            {
+                CustomRol role = new CustomRol { NombreRol = Env.SUPERADMINROLENAME};
+                await _context.CustomRoles.AddAsync(role);
                 await _context.SaveChangesAsync();
             }
         }

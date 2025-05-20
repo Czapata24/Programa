@@ -1,6 +1,7 @@
 ﻿using HankoSpa.DTOs;
 using HankoSpa.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace HankoSpa.Controllers
@@ -35,11 +36,26 @@ namespace HankoSpa.Controllers
             return View(dto);
 
         }
+
         [HttpGet]
         [Route("/Errors/{statuscode:int}")]
 
         public IActionResult Error (int statuscode)
         {
+            string errorMessage = "Ha ocurrido un error";
+            switch (statuscode)
+            {
+                case StatusCodes.Status401Unauthorized:
+                    errorMessage = "Debes iniciar sesion";
+                    break;
+                case StatusCodes.Status403Forbidden:
+                    errorMessage = "No tienes permiso para estar aqui";
+                    break;
+                case StatusCodes.Status404NotFound:
+                    errorMessage = "La pagina que estas intentando acceder no existe";
+                    break;
+            }
+            ViewBag.ErrorMessage = errorMessage;
             return View(statuscode);
         }
         [HttpGet]
