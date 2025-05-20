@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/HankoSpa/CopilotIndices/17.12.38.29086/CodeChunks.db
+/.vs/HankoSpa/v17/.wsuo
+/.vs/HankoSpa/v17/DocumentLayout.backup.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
